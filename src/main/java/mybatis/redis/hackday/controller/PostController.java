@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("post")
+@RequestMapping("board")
 public class PostController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -33,27 +33,33 @@ public class PostController {
     public ResponseEntity<DefaultResponse> list() {
         DefaultResponse res = new DefaultResponse();
         List<Post> posts = postMapper.findAll();
+
         res.setData(posts);
         res.setMsg("post 전체 목록");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping("{categoryId}")
+    @GetMapping("category/{categoryId}")
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();
         Category category = categoryMapper.findOne(categoryId);
         List<Post> posts = postMapper.findByCategoryId(category.getId());
+
         res.setData(posts);
         res.setMsg("해당 카테고리 post 내용");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<DefaultResponse> detailPost(@PathVariable int id) {
+    @GetMapping("post/{postId}")
+    public ResponseEntity<DefaultResponse> readPost(@PathVariable int postId) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postMapper.findOne(id);
+        Post post = postMapper.findOne(postId);
+
+        res.setData(post);
+        res.setMsg("게시글 내용");
+        res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

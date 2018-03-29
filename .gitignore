@@ -3,9 +3,6 @@ target/
 
 #### STS ####
 resources/
-/application.properties
-.application.properties
-application.properties
 .apt_generated
 .classpath
 .factorypath
