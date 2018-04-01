@@ -47,18 +47,18 @@ public class PostController {
         List<Post> posts = postMapper.findByCategoryId(category.getId());
 
         res.setData(posts);
-        res.setMsg("해당 카테고리 post 내용");
+        res.setMsg("해당 카테고리 post");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping("post/{postId}")
-    public ResponseEntity<DefaultResponse> readPost(@PathVariable int postId) {
+    @GetMapping("{categoryId}/{no}")
+    public ResponseEntity<DefaultResponse> postByCategory(@PathVariable int categoryId, @PathVariable int no) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postMapper.findOne(postId);
+        Post post = postMapper.findByCategoryId(categoryId).get(no - 1);
 
         res.setData(post);
-        res.setMsg("게시글 내용");
+        res.setMsg("해당 카테고리 게시글 내용");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
