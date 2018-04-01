@@ -12,5 +12,6 @@ public interface PostMapper {
     List<Post> findAll();
     List<Post> findByCategoryId(int categoryId);
     Post findByNo(int no);
+    void updateHit(Post post);
 
 }

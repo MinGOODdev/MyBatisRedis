@@ -56,6 +56,7 @@ public class PostController {
     public ResponseEntity<DefaultResponse> postByCategory(@PathVariable int categoryId, @PathVariable int no) {
         DefaultResponse res = new DefaultResponse();
         Post post = postMapper.findByCategoryId(categoryId).get(no - 1);
+        postMapper.updateHit(post);
 
         res.setData(post);
         res.setMsg("해당 카테고리 게시글 내용");
