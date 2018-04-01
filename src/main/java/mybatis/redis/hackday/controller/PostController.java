@@ -5,16 +5,14 @@ import mybatis.redis.hackday.dto.Post;
 import mybatis.redis.hackday.mapper.CategoryMapper;
 import mybatis.redis.hackday.mapper.PostMapper;
 import mybatis.redis.hackday.model.DefaultResponse;
+import mybatis.redis.hackday.model.PostModel;
 import mybatis.redis.hackday.model.StatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class PostController {
     @GetMapping("{categoryId}/{no}")
     public ResponseEntity<DefaultResponse> postByCategory(@PathVariable int categoryId, @PathVariable int no) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postMapper.findByCategoryId(categoryId).get(no - 1);
+        Post post = postMapper.findByCategoryIdAndNo(categoryId, no);
         postMapper.updateHit(post);
 
         res.setData(post);
