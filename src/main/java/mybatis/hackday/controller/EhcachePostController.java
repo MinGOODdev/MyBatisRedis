@@ -3,6 +3,7 @@ package mybatis.hackday.controller;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.StatusEnum;
+import mybatis.hackday.service.EhcachePostService;
 import mybatis.hackday.service.PostService;
 import mybatis.hackday.service.RedisPostService;
 import org.slf4j.Logger;
@@ -27,20 +28,43 @@ public class EhcachePostController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private PostService postService;
-    @Autowired
-    private RedisPostService redisPostService;
+    private EhcachePostService ehcachePostService;
 
-    @GetMapping("all")
-    public ResponseEntity<DefaultResponse> ehcacheList() {
+    @GetMapping("nocache")
+    public ResponseEntity<DefaultResponse> noCacheList() {
+        long start = System.currentTimeMillis();
+
         DefaultResponse res = new DefaultResponse();
-        List<Post> posts = postService.findAll();
-        redisPostService.savePost(posts);
+        List<Post> posts = ehcachePostService.findAllNoCache();
+
+        long end = System.currentTimeMillis();
+        logger.info("noEHCache의 수행시간: {}", Long.toString(end - start));
 
         res.setData(posts);
         res.setMsg("post 전체 목록");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("cache")
+    public ResponseEntity<DefaultResponse> cacheList() {
+        long start = System.currentTimeMillis();
+
+        DefaultResponse res = new DefaultResponse();
+        List<Post> posts = ehcachePostService.findAllCache();
+
+        long end = System.currentTimeMillis();
+        logger.info("EHCache의 수행시간: {}", Long.toString(end - start));
+
+        res.setData(posts);
+        res.setMsg("post 전체 목록");
+        res.setStatusEnum(StatusEnum.SUCCESS);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("refresh")
+    public void refresh() {
+        ehcachePostService.refresh();
     }
 
 }
