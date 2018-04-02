@@ -26,6 +26,7 @@ public class EhcachePostService implements EhcachePostRepository {
         return postMapper.findAll();
     }
 
+    // @Cacheable(value="", key"#method's argument")의 형태로도 사용할 수 있다.
     @Override
     @Cacheable(value="ehcache")
     public List<Post> findAllCache() {
@@ -33,6 +34,7 @@ public class EhcachePostService implements EhcachePostRepository {
         return postMapper.findAll();
     }
 
+    // @CacheEvict(value="", key"#method's argument")의 형태로도 사용할 수 있다.
     @Override
     @CacheEvict(value="ehcache")
     public void refresh() {
