@@ -1,4 +1,4 @@
-package mybatis.redis.hackday.model;
+package mybatis.hackday.model;
 
 public enum StatusEnum {
     SUCCESS, FAIL

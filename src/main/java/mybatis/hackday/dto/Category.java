@@ -1,4 +1,4 @@
-package mybatis.redis.hackday.dto;
+package mybatis.hackday.dto;
 
 import lombok.Data;
 

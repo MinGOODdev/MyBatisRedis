@@ -1,4 +1,4 @@
-package mybatis.redis.hackday.model;
+package mybatis.hackday.model;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
-package mybatis.redis.hackday.mapper;
+package mybatis.hackday.mapper;
 
-import mybatis.redis.hackday.dto.Post;
-import mybatis.redis.hackday.model.PostModel;
+import mybatis.hackday.dto.Post;
+import mybatis.hackday.model.PostModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

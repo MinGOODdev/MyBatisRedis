@@ -1,4 +1,4 @@
-package mybatis.redis.hackday;
+package mybatis.hackday;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

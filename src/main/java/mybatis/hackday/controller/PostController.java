@@ -1,12 +1,12 @@
-package mybatis.redis.hackday.controller;
+package mybatis.hackday.controller;
 
-import mybatis.redis.hackday.dto.Category;
-import mybatis.redis.hackday.dto.Post;
-import mybatis.redis.hackday.mapper.CategoryMapper;
-import mybatis.redis.hackday.mapper.PostMapper;
-import mybatis.redis.hackday.model.DefaultResponse;
-import mybatis.redis.hackday.model.PostModel;
-import mybatis.redis.hackday.model.StatusEnum;
+import mybatis.hackday.dto.Category;
+import mybatis.hackday.dto.Post;
+import mybatis.hackday.model.DefaultResponse;
+import mybatis.hackday.model.StatusEnum;
+import mybatis.hackday.mapper.CategoryMapper;
+import mybatis.hackday.mapper.PostMapper;
+import mybatis.hackday.model.PostModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

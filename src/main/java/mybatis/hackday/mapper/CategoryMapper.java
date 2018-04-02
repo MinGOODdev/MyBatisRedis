@@ -1,6 +1,6 @@
-package mybatis.redis.hackday.mapper;
+package mybatis.hackday.mapper;
 
-import mybatis.redis.hackday.dto.Category;
+import mybatis.hackday.dto.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
