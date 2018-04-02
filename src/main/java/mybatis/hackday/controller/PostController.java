@@ -5,6 +5,7 @@ import mybatis.hackday.mapper.PostMapper;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.PostModel;
 import mybatis.hackday.model.StatusEnum;
+import mybatis.hackday.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class PostController {
 
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private PostService postService;
 
     @GetMapping("all")
     public ResponseEntity<DefaultResponse> list() {
         DefaultResponse res = new DefaultResponse();
-        List<Post> posts = postMapper.findAll();
+        List<Post> posts = postService.findAll();
 
         res.setData(posts);
         res.setMsg("post 전체 목록");
@@ -37,24 +40,18 @@ public class PostController {
     @PostMapping("{categoryId}")
     public ResponseEntity<DefaultResponse> createPost(@PathVariable int categoryId, @RequestBody PostModel postModel) {
         DefaultResponse res = new DefaultResponse();
-        Post last = postMapper.findTopByCategoryIdOrderByNoDesc(categoryId);
-        int no = (last == null) ? 1 : last.getNo() + 1;
-
-        postModel.setNo(no);
-        postModel.setCategoryId(categoryId);
-        postMapper.insert(postModel);
+        postService.insert(categoryId, postModel);
 
         res.setData(postModel);
         res.setMsg("게시글 등록 완료");
         res.setStatusEnum(StatusEnum.SUCCESS);
-
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping("category/{categoryId}")
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();
-        List<Post> posts = postMapper.findByCategoryId(categoryId);
+        List<Post> posts = postService.findByCategoryId(categoryId);
 
         res.setData(posts);
         res.setMsg("해당 카테고리 post");
@@ -65,8 +62,8 @@ public class PostController {
     @GetMapping("{categoryId}/{no}")
     public ResponseEntity<DefaultResponse> postByCategory(@PathVariable int categoryId, @PathVariable int no) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postMapper.findByCategoryIdAndNo(categoryId, no);
-        postMapper.updateHit(post);
+        Post post = postService.findByCategoryIdAndNo(categoryId, no);
+        postService.updateHit(post);
 
         res.setData(post);
         res.setMsg("해당 카테고리 게시글 내용");
