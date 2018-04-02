@@ -1,12 +1,10 @@
 package mybatis.hackday.controller;
 
-import mybatis.hackday.dto.Category;
 import mybatis.hackday.dto.Post;
-import mybatis.hackday.model.DefaultResponse;
-import mybatis.hackday.model.StatusEnum;
-import mybatis.hackday.mapper.CategoryMapper;
 import mybatis.hackday.mapper.PostMapper;
+import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.PostModel;
+import mybatis.hackday.model.StatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,6 @@ public class PostController {
 
     @Autowired
     private PostMapper postMapper;
-    @Autowired
-    private CategoryMapper categoryMapper;
 
     @GetMapping("all")
     public ResponseEntity<DefaultResponse> list() {
@@ -58,8 +54,7 @@ public class PostController {
     @GetMapping("category/{categoryId}")
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();
-        Category category = categoryMapper.findOne(categoryId);
-        List<Post> posts = postMapper.findByCategoryId(category.getId());
+        List<Post> posts = postMapper.findByCategoryId(categoryId);
 
         res.setData(posts);
         res.setMsg("해당 카테고리 post");
