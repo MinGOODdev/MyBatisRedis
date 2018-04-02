@@ -38,6 +38,23 @@ public class PostController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @PostMapping("{categoryId}")
+    public ResponseEntity<DefaultResponse> createPost(@PathVariable int categoryId, @RequestBody PostModel postModel) {
+        DefaultResponse res = new DefaultResponse();
+        Post last = postMapper.findTopByCategoryIdOrderByNoDesc(categoryId);
+        int no = (last == null) ? 1 : last.getNo() + 1;
+
+        postModel.setNo(no);
+        postModel.setCategoryId(categoryId);
+        postMapper.insert(postModel);
+
+        res.setData(postModel);
+        res.setMsg("게시글 등록 완료");
+        res.setStatusEnum(StatusEnum.SUCCESS);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @GetMapping("category/{categoryId}")
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();

@@ -19,4 +19,6 @@ public interface PostMapper {
     void updateHit(Post post);
     void insert(PostModel postModel);
 
+    Post findTopByCategoryIdOrderByNoDesc(int categoryId);
+
 }
