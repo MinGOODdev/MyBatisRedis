@@ -1,11 +1,11 @@
 package mybatis.hackday.controller;
 
 import mybatis.hackday.dto.Post;
-import mybatis.hackday.mapper.PostMapper;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.PostModel;
 import mybatis.hackday.model.StatusEnum;
 import mybatis.hackday.service.PostService;
+import mybatis.hackday.service.RedisPostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,16 @@ public class PostController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private PostMapper postMapper;
-    @Autowired
     private PostService postService;
+    @Autowired
+    private RedisPostService redisPostService;
+
 
     @GetMapping("all")
     public ResponseEntity<DefaultResponse> list() {
         DefaultResponse res = new DefaultResponse();
         List<Post> posts = postService.findAll();
+        redisPostService.savePost(posts);
 
         res.setData(posts);
         res.setMsg("post 전체 목록");
