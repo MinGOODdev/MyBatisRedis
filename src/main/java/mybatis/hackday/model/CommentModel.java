@@ -6,6 +6,9 @@ import lombok.Data;
 public class CommentModel {
 
     private int id;
+    private int categoryId;
+    private int userId;
+    private int postNo;
     private String commentBody;
 
 }
