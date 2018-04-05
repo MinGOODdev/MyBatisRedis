@@ -75,6 +75,7 @@ public class PostController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    // Get Each post
     @GetMapping("{categoryId}/{no}")
     public ResponseEntity<DefaultResponse> postByCategory(@PathVariable int categoryId, @PathVariable int no) {
         DefaultResponse res = new DefaultResponse();
