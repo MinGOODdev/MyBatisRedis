@@ -4,8 +4,6 @@ import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.StatusEnum;
 import mybatis.hackday.service.EhcachePostService;
-import mybatis.hackday.service.PostService;
-import mybatis.hackday.service.RedisPostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

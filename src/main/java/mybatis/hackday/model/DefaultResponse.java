@@ -11,7 +11,8 @@ public class DefaultResponse {
 
     public DefaultResponse() {
         this.statusEnum = StatusEnum.FAIL;
-        this.data = data;
-        this.msg = msg;
+        this.data = null;
+        this.msg = null;
     }
+
 }
