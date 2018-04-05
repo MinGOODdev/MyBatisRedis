@@ -35,11 +35,12 @@ public class PostService {
         postMapper.updateHit(post);
     }
 
-    public void insert(int categoryId, PostModel postModel) {
+    public void insert(int categoryId, int userId, PostModel postModel) {
         Post last = findTopByCategoryIdOrderByNoDesc(categoryId);
         int no = (last == null) ? 1 : last.getNo() + 1;
 
         postModel.setCategoryId(categoryId);
+        postModel.setUserId(userId);
         postModel.setNo(no);
         postMapper.insert(postModel);
     }

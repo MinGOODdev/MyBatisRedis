@@ -11,6 +11,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    public User findByUserId(String userId) {
+        return userMapper.findByUserId(userId);
+    }
+
     public User login(String userId, String password) {
         User user = userMapper.findByUserId(userId);
         if(user == null) return null;

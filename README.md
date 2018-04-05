@@ -1,10 +1,14 @@
-# Spring Boot + MyBatis + Redis + EHCache
+# Spring Boot + MyBatis + Security
+* ### Redis
+* ### EHCache
 
-### 간단한 게시판 예제를 활용
+### 구성
+* Spring Boot + MyBatis : CRUD 게시판 구현
+* Securty : 사용자 권한 (로그인 구현)
+* Redis : 일정 조회수 이상의 글 따로 저장 및 갱신
+* EHCache : 게시판 전체 목록 조회 성능 개선 테스트
 
-* 일반적인 게시판 사용 CRUD는 MyBatis를 이용하여 구현
-* 일정 조회수 이상의 글은 따로 Redis의 저장 및 갱신
-
+아래부터 Wiki에 옮길 내용
 ### EHCache
 게시판이나 블로그 등 웹 기반의 애플리케이션은 최근에 사용된 데이터가 또 다시 사용되는 경향을 갖고 있다.<br/>
 80:20 법칙에 따라 20%의 데이터가 전체 조회 건수의 80%를 차지할 경우 캐시를 사용함으로써 성능을 대폭 향상시킬 수 있을 것이다.
