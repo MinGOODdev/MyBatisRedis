@@ -28,10 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.formLogin()
-            .loginProcessingUrl("/guest/login_processing");
+            .loginProcessingUrl("/guest/login_processing")
+            .defaultSuccessUrl("/board/all", true);
 
         http.logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("user/logout_processing"))
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout_processing"))
             .invalidateHttpSession(true);
     }
 
