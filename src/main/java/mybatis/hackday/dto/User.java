@@ -2,10 +2,8 @@ package mybatis.hackday.dto;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class User implements Serializable {
+public class User {
 
     private int id;
     private String userId;

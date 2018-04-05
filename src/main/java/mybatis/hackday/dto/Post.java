@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Data
 public class Post implements Serializable {
 
+    private static final long serialVersionUID = -5881130662885257748L;
+
     private int id;
     private int categoryId;
     private String categoryName;
