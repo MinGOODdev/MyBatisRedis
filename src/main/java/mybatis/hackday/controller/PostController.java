@@ -2,7 +2,6 @@ package mybatis.hackday.controller;
 
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.dto.User;
-import mybatis.hackday.model.CommentModel;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.PostModel;
 import mybatis.hackday.model.StatusEnum;
@@ -93,16 +92,4 @@ public class PostController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("{categoryId}/{postNo}")
-    public ResponseEntity<DefaultResponse> createComment(@PathVariable int categoryId, @PathVariable int postNo, @RequestBody CommentModel commentModel) {
-        DefaultResponse res = new DefaultResponse();
-
-        Post post = postService.findByCategoryIdAndNo(categoryId, postNo);
-        commentService.insert(categoryId, post.getNo(), commentModel);
-
-        res.setData(commentModel);
-        res.setMsg("댓글 등록 성공");
-        res.setStatusEnum(StatusEnum.SUCCESS);
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
 }
