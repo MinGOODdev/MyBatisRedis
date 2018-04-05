@@ -1,11 +1,14 @@
 package mybatis.hackday.service;
 
 import mybatis.hackday.dto.Post;
+import mybatis.hackday.dto.User;
 import mybatis.hackday.mapper.PostMapper;
 import mybatis.hackday.model.PostModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -14,6 +17,8 @@ public class PostService {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private UserService userService;
 
     public List<Post> findAll() {
         return postMapper.findAll();
@@ -35,12 +40,16 @@ public class PostService {
         postMapper.updateHit(post);
     }
 
-    public void insert(int categoryId, int userId, PostModel postModel) {
+    public void insert(int categoryId, PostModel postModel) {
         Post last = findTopByCategoryIdOrderByNoDesc(categoryId);
         int no = (last == null) ? 1 : last.getNo() + 1;
 
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String userId = principal.getName();
+        User user = userService.findByUserId(userId);
+
         postModel.setCategoryId(categoryId);
-        postModel.setUserId(userId);
+        postModel.setUserId(user.getId());
         postModel.setNo(no);
         postMapper.insert(postModel);
     }

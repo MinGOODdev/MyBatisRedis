@@ -11,4 +11,9 @@ public class Comment {
     private int userId;
     private String commentBody;
 
+    // Post Table
+    private String categoryName;
+    private String title;
+    private String body;
+    private int hit;
 }

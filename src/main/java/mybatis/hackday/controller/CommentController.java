@@ -1,6 +1,5 @@
 package mybatis.hackday.controller;
 
-import mybatis.hackday.dto.Comment;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.CommentModel;
 import mybatis.hackday.model.DefaultResponse;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("board")
 public class CommentController {
@@ -27,22 +24,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    // Get all comment in post
-    @GetMapping("comment/{categoryId}/{postNo}")
-    public ResponseEntity<DefaultResponse> commentListByPost(@PathVariable int categoryId, @PathVariable int postNo) {
-        DefaultResponse res = new DefaultResponse();
-        List<Comment> commentList = commentService.findByCategoryIdAndPostNo(categoryId, postNo);
-
-        res.setData(commentList);
-        res.setMsg("게시글 별 댓글 리스트");
-        res.setStatusEnum(StatusEnum.SUCCESS);
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
-    @PostMapping("{categoryId}/{postNo}")
+    @PostMapping("{categoryId}/{postNo}/comment")
     public ResponseEntity<DefaultResponse> createComment(@PathVariable int categoryId, @PathVariable int postNo, @RequestBody CommentModel commentModel) {
         DefaultResponse res = new DefaultResponse();
-
         Post post = postService.findByCategoryIdAndNo(categoryId, postNo);
         commentService.insert(categoryId, post.getNo(), commentModel);
 

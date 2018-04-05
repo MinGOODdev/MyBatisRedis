@@ -18,7 +18,6 @@ import java.util.List;
 
 
 @RestController
-@SuppressWarnings("Duplicates")
 @EnableCaching
 @RequestMapping("ehcache")
 public class EhcachePostController {
