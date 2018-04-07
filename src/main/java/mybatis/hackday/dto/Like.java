@@ -7,7 +7,7 @@ public class Like {
 
     private int id;
     private int categoryId;
-    private int postId;
+    private int postNo;
     private int commentId;
     private int userId;
 
