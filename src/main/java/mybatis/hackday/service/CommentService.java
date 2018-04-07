@@ -24,6 +24,10 @@ public class CommentService {
         return commentMapper.findByCategoryIdAndPostNo(categoryId, postNo);
     }
 
+    public Comment findByCategoryIdAndPostNoAndId(int categoryId, int postNo, int commentId) {
+        return commentMapper.findByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
+    }
+
     public void insert(int categoryId, int postNo, CommentModel commentModel) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userId = principal.getName();
