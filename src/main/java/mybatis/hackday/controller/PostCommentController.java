@@ -1,9 +1,11 @@
 package mybatis.hackday.controller;
 
+import mybatis.hackday.dto.Category;
 import mybatis.hackday.dto.Comment;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.StatusEnum;
+import mybatis.hackday.service.CategoryService;
 import mybatis.hackday.service.CommentService;
 import mybatis.hackday.service.PostService;
 import org.slf4j.Logger;
@@ -28,14 +30,17 @@ public class PostCommentController {
     private PostService postService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private CategoryService categoryService;
 
     // Get all comment in post
     @GetMapping("{categoryId}/{postNo}")
     public ResponseEntity<DefaultResponse> commentListByPost(@PathVariable int categoryId, @PathVariable int postNo) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postService.findByCategoryIdAndNo(categoryId, postNo);
+        Category category = categoryService.findById(categoryId);
+        Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
         postService.updateHit(post);
-        List<Comment> commentList = commentService.findByCategoryIdAndPostNo(categoryId, postNo);
+        List<Comment> commentList = commentService.findByCategoryIdAndPostNo(category.getId(), post.getNo());
 
         if(commentList.size() == 0) {
             res.setData(post);

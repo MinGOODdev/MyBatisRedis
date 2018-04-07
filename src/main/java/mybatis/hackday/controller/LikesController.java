@@ -1,9 +1,11 @@
 package mybatis.hackday.controller;
 
+import mybatis.hackday.dto.Category;
 import mybatis.hackday.dto.Comment;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.StatusEnum;
+import mybatis.hackday.service.CategoryService;
 import mybatis.hackday.service.CommentService;
 import mybatis.hackday.service.LikesService;
 import mybatis.hackday.service.PostService;
@@ -26,16 +28,18 @@ public class LikesController {
     private LikesService likesService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private CategoryService categoryService;
 
     // 공감
     @GetMapping("{categoryId}/{postNo}/{commentId}")
     public ResponseEntity<DefaultResponse> likeComment(@PathVariable int categoryId, @PathVariable int postNo, @PathVariable int commentId) {
         DefaultResponse res = new DefaultResponse();
-        Post post = postService.findByCategoryIdAndNo(categoryId, postNo);
-        Comment comment = commentService.findByCategoryIdAndPostNoAndId(categoryId, post.getNo(), commentId);
+        Category category = categoryService.findById(categoryId);
+        Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
+        Comment comment = commentService.findByCategoryIdAndPostNoAndId(category.getId(), post.getNo(), commentId);
 
-        // likeService.insert(categoryId, post.getNo(), comment.getId());
-        likesService.likeOrNoLike(categoryId, postNo, commentId);
+        likesService.likeOrNoLike(category.getId(), post.getNo(), comment.getId());
 
         res.setData(comment);
         res.setMsg("좋아요");
