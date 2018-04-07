@@ -3,7 +3,7 @@ package mybatis.hackday.model;
 import lombok.Data;
 
 @Data
-public class LikeModel {
+public class LikesModel {
 
     private int id;
     private int categoryId;
