@@ -32,9 +32,9 @@ public class LikesService {
         }
         else {
             insert(categoryId, postNo, commentId);
-    }
+        }
 
-}
+    }
 
     public Likes findByCategoryIdAndPostNoAndCommentIdAndUserId(int categoryId, int postNo, int commentId, int userId) {
         return likesMapper.findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, userId);
