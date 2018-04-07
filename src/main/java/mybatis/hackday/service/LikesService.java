@@ -27,14 +27,14 @@ public class LikesService {
         String userId = principal.getName();
         User user = userService.findByUserId(userId);
 
-        if(likesMapper.findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId()) != null) {
+        if(findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId()) != null) {
             // 공감 삭제
         }
         else {
             insert(categoryId, postNo, commentId);
-        }
-
     }
+
+}
 
     public Likes findByCategoryIdAndPostNoAndCommentIdAndUserId(int categoryId, int postNo, int commentId, int userId) {
         return likesMapper.findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, userId);
