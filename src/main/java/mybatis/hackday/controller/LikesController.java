@@ -31,7 +31,7 @@ public class LikesController {
     @Autowired
     private CategoryService categoryService;
 
-    // 공감
+    // Create Like || Delete Like (likeService.likeOrNoLike) (좋아요 등록 및 취소)
     @GetMapping("{categoryId}/{postNo}/{commentId}")
     public ResponseEntity<DefaultResponse> likeComment(@PathVariable int categoryId, @PathVariable int postNo, @PathVariable int commentId) {
         DefaultResponse res = new DefaultResponse();

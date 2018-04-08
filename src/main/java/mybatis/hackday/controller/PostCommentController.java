@@ -33,7 +33,7 @@ public class PostCommentController {
     @Autowired
     private CategoryService categoryService;
 
-    // Get all comment in post
+    // Get all comment in post [게시글의 모든 댓글 (게시글 포함)]
     @GetMapping("{categoryId}/{postNo}")
     public ResponseEntity<DefaultResponse> commentListByPost(@PathVariable int categoryId, @PathVariable int postNo) {
         DefaultResponse res = new DefaultResponse();

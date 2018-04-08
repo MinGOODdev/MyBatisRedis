@@ -28,6 +28,7 @@ public class CommentController {
     @Autowired
     private CategoryService categoryService;
 
+    // Create Comment (댓글 등록)
     @PostMapping("{categoryId}/{postNo}/comment")
     public ResponseEntity<DefaultResponse> createComment(@PathVariable int categoryId, @PathVariable int postNo, @RequestBody CommentModel commentModel) {
         DefaultResponse res = new DefaultResponse();

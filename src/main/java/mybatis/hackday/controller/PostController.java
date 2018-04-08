@@ -42,7 +42,7 @@ public class PostController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    // Create Post (need to login)
+    // Create Post (need to login) (게시글 등록)
     @PostMapping("{categoryId}/post")
     public ResponseEntity<DefaultResponse> createPost(@PathVariable int categoryId, @RequestBody PostModel postModel) {
         DefaultResponse res = new DefaultResponse();
@@ -55,7 +55,7 @@ public class PostController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    // Get all Post by Category
+    // Get all Post by Category (카테고리별 게시글 리스트)
     @GetMapping("board/{categoryId}")
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();
