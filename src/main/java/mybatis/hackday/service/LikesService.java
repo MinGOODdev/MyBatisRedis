@@ -1,5 +1,6 @@
 package mybatis.hackday.service;
 
+import mybatis.hackday.dto.Comment;
 import mybatis.hackday.dto.Likes;
 import mybatis.hackday.dto.User;
 import mybatis.hackday.mapper.LikesMapper;
@@ -21,18 +22,24 @@ public class LikesService {
     private LikesMapper likesMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
     public void likeOrNoLike(int categoryId, int postNo, int commentId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userId = principal.getName();
         User user = userService.findByUserId(userId);
 
+        Comment comment = commentService.findByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
+
         // dislikes
         if(findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId()) != null) {
             Likes likes = findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId());
+            commentService.subLikesCount(comment);
             delete(likes.getId());
         }
         else {
+            commentService.addLikesCount(comment);
             insert(categoryId, postNo, commentId);
         }
 

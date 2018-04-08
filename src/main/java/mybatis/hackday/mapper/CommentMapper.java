@@ -13,5 +13,7 @@ public interface CommentMapper {
     List<Comment> findByCategoryIdAndPostNo(@Param("categoryId") int categoryId, @Param("postNo") int postNo);
     Comment findByCategoryIdAndPostNoAndId(@Param("categoryId") int categoryId, @Param("postNo") int postNo, @Param("id") int id);
     void insert(CommentModel commentModel);
+    void addLikesCount(Comment comment);
+    void subLikesCount(Comment comment);
 
 }

@@ -39,4 +39,12 @@ public class CommentService {
         commentMapper.insert(commentModel);
     }
 
+    public void addLikesCount(Comment comment) {
+        commentMapper.addLikesCount(comment);
+    }
+
+    public void subLikesCount(Comment comment) {
+        commentMapper.subLikesCount(comment);
+    }
+
 }
