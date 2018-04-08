@@ -10,5 +10,6 @@ public interface LikesMapper {
 
     Likes findByCategoryIdAndPostNoAndCommentIdAndUserId(@Param("categoryId") int categoryId, @Param("postNo") int postNo, @Param("commentId") int commentId, @Param("userId") int userId);
     void insert(LikesModel likesModel);
+    void delete(int id);
 
 }

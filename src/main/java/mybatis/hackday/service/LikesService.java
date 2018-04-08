@@ -27,8 +27,10 @@ public class LikesService {
         String userId = principal.getName();
         User user = userService.findByUserId(userId);
 
+        // dislikes
         if(findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId()) != null) {
-            // 공감 삭제
+            Likes likes = findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId());
+            delete(likes.getId());
         }
         else {
             insert(categoryId, postNo, commentId);
@@ -51,6 +53,10 @@ public class LikesService {
         likesModel.setCommentId(commentId);
         likesModel.setUserId(user.getId());
         likesMapper.insert(likesModel);
+    }
+
+    public void delete(int likesId) {
+        likesMapper.delete(likesId);
     }
 
 }
