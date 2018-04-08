@@ -10,5 +10,6 @@ public class CommentModel {
     private int userId;
     private int postNo;
     private String commentBody;
+    private int likesCount;
 
 }

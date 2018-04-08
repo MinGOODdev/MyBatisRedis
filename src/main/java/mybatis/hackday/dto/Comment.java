@@ -10,6 +10,7 @@ public class Comment {
     private int postNo;
     private int userId;
     private String commentBody;
+    private int likesCount;
 
     // Post Table
     private String categoryName;
