@@ -10,8 +10,11 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
 
-    // resultMap
+    // resultMap (commentId DESC)
     Post findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(@Param("categoryId") int categoryId, @Param("postNo") int postNo);
+
+    // resultMap (likesCount DESC)
+    Post findAllByCategoryIdAndPostNoWithCommentsOrderByLikesCountDesc(@Param("categoryId") int categoryId, @Param("postNo") int postNo);
 
     List<Post> findAll();
     List<Post> findByCategoryIdOrderByNoDesc(int categoryId);

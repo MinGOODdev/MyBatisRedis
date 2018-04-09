@@ -20,9 +20,13 @@ public class PostService {
     @Autowired
     private UserService userService;
 
-    // 댓글 포함 게시글 조회
+    // 댓글 포함 게시글 조회 (commentId DESC)
     public Post findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(int categoryId, int postNo) {
         return postMapper.findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(categoryId, postNo);
+    }
+
+    public Post findAllByCategoryIdAndPostNoWithCommentsOrderByLikesCountDesc(int categoryId, int postNo) {
+        return postMapper.findAllByCategoryIdAndPostNoWithCommentsOrderByLikesCountDesc(categoryId, postNo);
     }
 
     // 전체 게시글 보기 (board/all)
@@ -30,6 +34,7 @@ public class PostService {
         return postMapper.findAll();
     }
 
+    // postNo DESC
     public List<Post> findByCategoryIdOrderByNoDesc(int categoryId) {
         return postMapper.findByCategoryIdOrderByNoDesc(categoryId);
     }
@@ -38,6 +43,7 @@ public class PostService {
         return postMapper.findByCategoryIdAndNo(categoryId, no);
     }
 
+    // 마지막 게시글 no 계산하는 메소드
     public Post findTopByCategoryIdOrderByNoDesc(int categoryId) {
         return postMapper.findTopByCategoryIdOrderByNoDesc(categoryId);
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping("board")
 public class PostCommentController {
@@ -51,10 +52,32 @@ public class PostCommentController {
         else {
             postService.updateHit(postComment);
             res.setData(postComment);
+            res.setMsg("해당 카테고리의 선택된 게시글 댓글 포함 (댓글 최신순)");
+            res.setStatusEnum(StatusEnum.SUCCESS);
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("{categoryId}/{postNo}/likes")
+    public ResponseEntity<DefaultResponse> commentListByPostOrderByLikesCount(@PathVariable int categoryId, @PathVariable int postNo) {
+        DefaultResponse res = new DefaultResponse();
+        Category category = categoryService.findById(categoryId);
+        Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
+        Post postComment = postService.findAllByCategoryIdAndPostNoWithCommentsOrderByLikesCountDesc(category.getId(), postNo);
+        List<Comment> commentList = commentService.findByCategoryIdAndPostNo(category.getId(), post.getNo());
+
+        if (commentList.size() == 0) {
+            postService.updateHit(post);
+            res.setData(post);
             res.setMsg("해당 카테고리의 선택된 게시글 내용");
             res.setStatusEnum(StatusEnum.SUCCESS);
         }
-
+        else {
+            postService.updateHit(postComment);
+            res.setData(postComment);
+            res.setMsg("해당 카테고리의 선택된 게시글 댓글 포함 (좋아요 갯수 순)");
+            res.setStatusEnum(StatusEnum.SUCCESS);
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
