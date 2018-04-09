@@ -20,6 +20,12 @@ public class CommentService {
     @Autowired
     private UserService userService;
 
+    // 좋아요 (내림차순 정렬)
+    public List<Comment> findByCategoryIdAndPostNoOrderByLikesCountDesc(int categoryId, int postNo) {
+        return commentMapper.findByCategoryIdAndPostNoOrderByLikesCountDesc(categoryId, postNo);
+    }
+
+    // 게시글에 댓글이 있는지 없는지 판단하기 위함
     public List<Comment> findByCategoryIdAndPostNo(int categoryId, int postNo) {
         return commentMapper.findByCategoryIdAndPostNo(categoryId, postNo);
     }

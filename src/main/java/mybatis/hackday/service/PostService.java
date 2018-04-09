@@ -20,6 +20,12 @@ public class PostService {
     @Autowired
     private UserService userService;
 
+    // 댓글 포함 게시글 조회
+    public Post findAllByCategoryIdAndPostNoWithComments(int categoryId, int postNo) {
+        return postMapper.findAllByCategoryIdAndPostNoWithComments(categoryId, postNo);
+    }
+
+    // 전체 게시글 보기 (board/all)
     public List<Post> findAll() {
         return postMapper.findAll();
     }
