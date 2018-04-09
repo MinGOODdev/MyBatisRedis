@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 public class LikesService {
@@ -47,6 +48,10 @@ public class LikesService {
 
     public Likes findByCategoryIdAndPostNoAndCommentIdAndUserId(int categoryId, int postNo, int commentId, int userId) {
         return likesMapper.findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, userId);
+    }
+
+    public List<Likes> findByCategoryIdAndPostNoAndCommentId(int categoryId, int postNo, int commentId) {
+        return likesMapper.findByCategoryIdAndPostNoAndCommentId(categoryId, postNo, commentId);
     }
 
     public void insert(int categoryId, int postNo, int commentId) {

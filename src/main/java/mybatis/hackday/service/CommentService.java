@@ -1,6 +1,7 @@
 package mybatis.hackday.service;
 
 import mybatis.hackday.dto.Comment;
+import mybatis.hackday.dto.Likes;
 import mybatis.hackday.dto.User;
 import mybatis.hackday.mapper.CommentMapper;
 import mybatis.hackday.model.CommentModel;
@@ -19,11 +20,13 @@ public class CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikesService likesService;
 
-    // 좋아요 (내림차순 정렬)
-    public List<Comment> findByCategoryIdAndPostNoOrderByLikesCountDesc(int categoryId, int postNo) {
-        return commentMapper.findByCategoryIdAndPostNoOrderByLikesCountDesc(categoryId, postNo);
-    }
+//    // 좋아요 (내림차순 정렬)
+//    public List<Comment> findByCategoryIdAndPostNoOrderByLikesCountDesc(int categoryId, int postNo) {
+//        return commentMapper.findByCategoryIdAndPostNoOrderByLikesCountDesc(categoryId, postNo);
+//    }
 
     // 게시글에 댓글이 있는지 없는지 판단하기 위함
     public List<Comment> findByCategoryIdAndPostNo(int categoryId, int postNo) {
@@ -51,6 +54,22 @@ public class CommentService {
 
     public void subLikesCount(Comment comment) {
         commentMapper.subLikesCount(comment);
+    }
+
+    public void deleteByCategoryIdAndPostNoAndId(int categoryId, int postNo, int commentId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String userId = principal.getName();
+        User user = userService.findByUserId(userId);
+
+        if(user.getId() == findByCategoryIdAndPostNoAndId(categoryId, postNo, commentId).getUserId()) {
+            List<Likes> likes = likesService.findByCategoryIdAndPostNoAndCommentId(categoryId, postNo, commentId);
+            for(Likes like : likes)
+                likesService.delete(like.getId());
+            commentMapper.deleteByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
+        }
+        else {
+            // 댓글을 작성한 유저가 아닐 경우
+        }
     }
 
 }

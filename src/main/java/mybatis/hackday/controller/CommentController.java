@@ -1,6 +1,7 @@
 package mybatis.hackday.controller;
 
 import mybatis.hackday.dto.Category;
+import mybatis.hackday.dto.Comment;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.model.CommentModel;
 import mybatis.hackday.model.DefaultResponse;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,6 +41,21 @@ public class CommentController {
 
         res.setData(commentModel);
         res.setMsg("댓글 등록 성공");
+        res.setStatusEnum(StatusEnum.SUCCESS);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{categoryId}/{postNo}/{commentId}")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public ResponseEntity<DefaultResponse> deleteCommentWithLikes(@PathVariable int categoryId, @PathVariable int postNo, @PathVariable int commentId) {
+        DefaultResponse res = new DefaultResponse();
+        Category category = categoryService.findById(categoryId);
+        Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
+        Comment comment = commentService.findByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
+        commentService.deleteByCategoryIdAndPostNoAndId(category.getId(), post.getNo(), commentId);
+
+        res.setData(comment);
+        res.setMsg("해당 댓글 삭제");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

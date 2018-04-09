@@ -18,5 +18,6 @@ public interface CommentMapper {
     void insert(CommentModel commentModel);
     void addLikesCount(Comment comment);
     void subLikesCount(Comment comment);
+    void deleteByCategoryIdAndPostNoAndId(@Param("categoryId") int categoryId, @Param("postNo") int postNo, @Param("id") int id);
 
 }
