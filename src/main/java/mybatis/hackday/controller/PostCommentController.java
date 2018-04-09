@@ -39,7 +39,7 @@ public class PostCommentController {
         DefaultResponse res = new DefaultResponse();
         Category category = categoryService.findById(categoryId);
         Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
-        Post postComment = postService.findAllByCategoryIdAndPostNoWithComments(category.getId(), postNo);
+        Post postComment = postService.findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(category.getId(), postNo);
         List<Comment> commentList = commentService.findByCategoryIdAndPostNo(category.getId(), post.getNo());
 
         if (commentList.size() == 0) {

@@ -21,8 +21,8 @@ public class PostService {
     private UserService userService;
 
     // 댓글 포함 게시글 조회
-    public Post findAllByCategoryIdAndPostNoWithComments(int categoryId, int postNo) {
-        return postMapper.findAllByCategoryIdAndPostNoWithComments(categoryId, postNo);
+    public Post findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(int categoryId, int postNo) {
+        return postMapper.findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(categoryId, postNo);
     }
 
     // 전체 게시글 보기 (board/all)

@@ -11,7 +11,7 @@ import java.util.List;
 public interface PostMapper {
 
     // resultMap
-    Post findAllByCategoryIdAndPostNoWithComments(@Param("categoryId") int categoryId, @Param("postNo") int postNo);
+    Post findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(@Param("categoryId") int categoryId, @Param("postNo") int postNo);
 
     List<Post> findAll();
     List<Post> findByCategoryIdOrderByNoDesc(int categoryId);
