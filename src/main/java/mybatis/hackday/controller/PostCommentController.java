@@ -39,21 +39,23 @@ public class PostCommentController {
         DefaultResponse res = new DefaultResponse();
         Category category = categoryService.findById(categoryId);
         Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);
-        postService.updateHit(post);
+        Post postComment = postService.findAllByCategoryIdAndPostNoWithComments(category.getId(), postNo);
         List<Comment> commentList = commentService.findByCategoryIdAndPostNo(category.getId(), post.getNo());
 
-        if(commentList.size() == 0) {
+        if (commentList.size() == 0) {
+            postService.updateHit(post);
             res.setData(post);
             res.setMsg("해당 카테고리의 선택된 게시글 내용");
             res.setStatusEnum(StatusEnum.SUCCESS);
-            return new ResponseEntity<>(res, HttpStatus.OK);
         }
         else {
-            res.setData(commentList);
-            res.setMsg("각각의 게시글 전체 내용(댓글 포함)");
+            postService.updateHit(postComment);
+            res.setData(postComment);
+            res.setMsg("해당 카테고리의 선택된 게시글 내용");
             res.setStatusEnum(StatusEnum.SUCCESS);
-            return new ResponseEntity<>(res, HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
 }
