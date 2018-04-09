@@ -30,8 +30,8 @@ public class PostService {
         return postMapper.findAll();
     }
 
-    public List<Post> findByCategoryId(int categoryId) {
-        return postMapper.findByCategoryId(categoryId);
+    public List<Post> findByCategoryIdOrderByNoDesc(int categoryId) {
+        return postMapper.findByCategoryIdOrderByNoDesc(categoryId);
     }
 
     public Post findByCategoryIdAndNo(int categoryId, int no) {

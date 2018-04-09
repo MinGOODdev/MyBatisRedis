@@ -60,7 +60,7 @@ public class PostController {
     public ResponseEntity<DefaultResponse> listByCategory(@PathVariable int categoryId) {
         DefaultResponse res = new DefaultResponse();
         Category category = categoryService.findById(categoryId);
-        List<Post> posts = postService.findByCategoryId(category.getId());
+        List<Post> posts = postService.findByCategoryIdOrderByNoDesc(category.getId());
 
         res.setData(posts);
         res.setMsg("해당 카테고리의 게시글 리스트");
