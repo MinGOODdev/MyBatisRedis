@@ -12,9 +12,4 @@ public class Comment {
     private String commentBody;
     private int likesCount;
 
-    // Post Table
-    private String categoryName;
-    private String title;
-    private String body;
-    private int hit;
 }

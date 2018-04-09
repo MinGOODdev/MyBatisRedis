@@ -19,4 +19,7 @@ public class Post implements Serializable {
     private String body;
     private int hit;
 
+    // resultMap
+    private List<Comment> comments;
+
 }
