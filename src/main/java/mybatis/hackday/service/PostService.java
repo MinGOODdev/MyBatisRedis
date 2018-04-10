@@ -1,12 +1,17 @@
 package mybatis.hackday.service;
 
+import mybatis.hackday.dto.Comment;
+import mybatis.hackday.dto.Likes;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.dto.User;
 import mybatis.hackday.mapper.PostMapper;
+import mybatis.hackday.model.DefaultResponse;
 import mybatis.hackday.model.PostModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -19,6 +24,10 @@ public class PostService {
     private PostMapper postMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private LikesService likesService;
 
     // 댓글 포함 게시글 조회 (commentId DESC)
     public Post findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc(int categoryId, int postNo) {
@@ -64,6 +73,30 @@ public class PostService {
         postModel.setUserId(user.getId());
         postModel.setNo(no);
         postMapper.insert(postModel);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteByCategoryIdAndNo(int categoryId, int no) throws IllegalAccessException {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String userId = principal.getName();
+        User user = userService.findByUserId(userId);
+
+        if(user.getId() == findByCategoryIdAndNo(categoryId, no).getUserId()) {
+            List<Comment> comments = commentService.findByCategoryIdAndPostNo(categoryId, no);
+
+            for(Comment c : comments) {
+                List<Likes> likes = likesService.findByCategoryIdAndPostNoAndCommentId(categoryId, no, c.getId());
+
+                for(Likes like : likes)
+                    likesService.delete(like.getId());
+
+                commentService.delete(c.getId());
+            }
+            postMapper.deleteByCategoryIdAndNo(categoryId, no);
+        }
+        else {
+            throw new IllegalAccessException("게시글을 작성한 사용자가 아닙니다.");
+        }
     }
 
 }

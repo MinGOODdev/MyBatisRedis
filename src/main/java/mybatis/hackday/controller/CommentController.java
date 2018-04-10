@@ -47,7 +47,7 @@ public class CommentController {
 
     @DeleteMapping("{categoryId}/{postNo}/{commentId}")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public ResponseEntity<DefaultResponse> deleteCommentWithLikes(@PathVariable int categoryId, @PathVariable int postNo, @PathVariable int commentId) {
+    public ResponseEntity<DefaultResponse> deleteCommentWithLikes(@PathVariable int categoryId, @PathVariable int postNo, @PathVariable int commentId) throws IllegalAccessException {
         DefaultResponse res = new DefaultResponse();
         Category category = categoryService.findById(categoryId);
         Post post = postService.findByCategoryIdAndNo(category.getId(), postNo);

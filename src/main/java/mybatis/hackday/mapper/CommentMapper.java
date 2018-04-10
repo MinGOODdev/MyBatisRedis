@@ -18,6 +18,7 @@ public interface CommentMapper {
     void insert(CommentModel commentModel);
     void addLikesCount(Comment comment);
     void subLikesCount(Comment comment);
+    void delete(int id);        // post를 지울 때 사용하기 위해서 만듬
     void deleteByCategoryIdAndPostNoAndId(@Param("categoryId") int categoryId, @Param("postNo") int postNo, @Param("id") int id);
 
 }

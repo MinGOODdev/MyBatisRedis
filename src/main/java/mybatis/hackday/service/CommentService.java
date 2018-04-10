@@ -8,6 +8,8 @@ import mybatis.hackday.model.CommentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -56,7 +58,8 @@ public class CommentService {
         commentMapper.subLikesCount(comment);
     }
 
-    public void deleteByCategoryIdAndPostNoAndId(int categoryId, int postNo, int commentId) {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteByCategoryIdAndPostNoAndId(int categoryId, int postNo, int commentId) throws IllegalAccessException {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userId = principal.getName();
         User user = userService.findByUserId(userId);
@@ -68,8 +71,12 @@ public class CommentService {
             commentMapper.deleteByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
         }
         else {
-            // 댓글을 작성한 유저가 아닐 경우
+            throw new IllegalAccessException("댓글을 작성한 사용자가 아닙니다.");
         }
+    }
+
+    public void delete(int id) {
+        commentMapper.delete(id);
     }
 
 }

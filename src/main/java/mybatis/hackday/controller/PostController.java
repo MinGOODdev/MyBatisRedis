@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +66,20 @@ public class PostController {
 
         res.setData(posts);
         res.setMsg("해당 카테고리의 게시글 리스트");
+        res.setStatusEnum(StatusEnum.SUCCESS);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{categoryId}/{no}")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public ResponseEntity<DefaultResponse> deletePostWithCommentsAndLikes(@PathVariable int categoryId, @PathVariable int no) throws IllegalAccessException {
+        DefaultResponse res = new DefaultResponse();
+        Category category = categoryService.findById(categoryId);
+        Post post = postService.findByCategoryIdAndNo(category.getId(), no);
+        postService.deleteByCategoryIdAndNo(category.getId(), post.getNo());
+
+        res.setData(post);
+        res.setMsg("해당 게시글 삭제");
         res.setStatusEnum(StatusEnum.SUCCESS);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

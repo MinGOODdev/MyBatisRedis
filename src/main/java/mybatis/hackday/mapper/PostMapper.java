@@ -24,7 +24,7 @@ public interface PostMapper {
 
     void updateHit(Post post);
     void insert(PostModel postModel);
-    void delete(int id);
+    void deleteByCategoryIdAndNo(@Param("categoryId") int categoryId, @Param("no") int no);
 
     Post findTopByCategoryIdOrderByNoDesc(int categoryId);
 
