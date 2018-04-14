@@ -110,7 +110,7 @@
 실행되는 현상 발생. Postman과 Edge로 테스트하면 정상.
 
 ## 저자
-* **조민국** - *초기작* - [MinGOODdev](https://github.com/MinGOODdev)
+* **조민국** - [MinGOODdev](https://github.com/MinGOODdev)
 
 ## 감사 인사
 
