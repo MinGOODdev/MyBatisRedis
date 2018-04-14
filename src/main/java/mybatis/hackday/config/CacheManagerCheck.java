@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheManagerCheck implements CommandLineRunner {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(CacheManagerCheck.class);
     private final CacheManager cacheManager;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
