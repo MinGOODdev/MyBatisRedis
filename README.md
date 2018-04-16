@@ -2,6 +2,11 @@
 * ## Redis
 * ## EHCache
 ![Database](./img/myBatisRedis.PNG)
+* Api Manual
+    * [PostCommentController](./apidoc/PostCommentController.md)
+    * [PostController](./apidoc/PostController.md)
+    * [CommentContoller](./apidoc/CommentController.md)
+    * [LikesController](./apidoc/LikesController.md)
 
 ## 시작하기
 * IDE: IntelliJ
