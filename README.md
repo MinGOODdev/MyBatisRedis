@@ -1,6 +1,7 @@
 # Spring Boot + MyBatis + Security
 * ## Redis
 * ## EHCache
+![Database](./img/myBatisRedis.PNG)
 
 ## 시작하기
 * IDE: IntelliJ
