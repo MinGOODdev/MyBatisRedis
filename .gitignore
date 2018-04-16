@@ -2,7 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 
 #### STS ####
-resources/
+resources/application.properties
+resources/mapper
 .apt_generated
 .classpath
 .factorypath

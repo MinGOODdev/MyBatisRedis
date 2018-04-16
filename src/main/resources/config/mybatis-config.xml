@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <package name="mybatis.hackday.dto"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mapper/CategoryMapper.xml"/>
+        <mapper resource="mapper/PostMapper.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/CommentMapper.xml"/>
+        <mapper resource="mapper/LikesMapper.xml"/>
+    </mappers>
+</configuration>
