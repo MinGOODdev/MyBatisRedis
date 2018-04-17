@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.hackday.mapper.CommentMapper">
+
+    <select id="findByCategoryIdAndPostNo" resultType="Comment">
+        SELECT m.*, p.*, c.categoryName
+        FROM Comment m LEFT JOIN Post p ON m.postNo = p.no
+                       LEFT JOIN Category c ON m.categoryId = c.id
+        WHERE m.categoryId = #{categoryId} AND m.postNo = #{postNo}
+        GROUP BY m.id
+    </select>
+
+    <select id="findByCategoryIdAndPostNoAndId" resultType="Comment">
+        SELECT m.*
+        FROM Comment m
+        WHERE m.categoryId = #{categoryId} AND m.postNo = #{postNo} AND m.id = #{id}
+    </select>
+    
+    <!--<select id="findByCategoryIdAndPostNoOrderByLikesCountDesc" resultType="Comment">-->
+        <!--SELECT m.*-->
+        <!--FROM Comment m-->
+        <!--WHERE m.categoryId = #{categoryId} AND m.postNo = #{postNo}-->
+        <!--ORDER BY likesCount DESC-->
+    <!--</select>-->
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT Comment (categoryId, userId, postNo, commentBody)
+        VALUES (#{categoryId}, #{userId}, #{postNo}, #{commentBody})
+    </insert>
+
+    <update id="addLikesCount">
+        UPDATE Comment SET
+          likesCount = #{likesCount} + 1
+        WHERE id = #{id} AND categoryId = #{categoryId} AND postNo = #{postNo}
+    </update>
+
+    <update id="subLikesCount">
+        UPDATE Comment SET
+          likesCount = #{likesCount} - 1
+        WHERE id = #{id} AND categoryId = #{categoryId} AND postNo = #{postNo}
+    </update>
+
+    <delete id="deleteByCategoryIdAndPostNoAndId">
+        DELETE FROM Comment
+        WHERE categoryId = #{categoryId} AND postNo = #{postNo} AND id = #{id}
+    </delete>
+
+    <delete id="delete">
+        DELETE FROM Comment
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

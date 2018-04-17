@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.hackday.mapper.PostMapper">
+
+    <!-- 카테고리 내 선택한 게시글 내용 조회 (댓글 포함 & commentId DESC) -->
+    <select id="findAllByCategoryIdAndPostNoWithCommentsOrderByCommentIdDesc" resultMap="commentsInPost">
+      SELECT p.*,
+             m.id commentId, m.postNo, m.userId commentUserId, m.commentBody, m.likesCount,
+             c.categoryName
+      FROM Post p LEFT JOIN Category c ON p.categoryId = c.id
+                  LEFT JOIN Comment m ON p.no = m.postNo
+      WHERE p.categoryId = #{categoryId} AND p.no = #{postNo} AND m.categoryId = #{categoryId} AND m.postNo = #{postNo}
+      ORDER BY m.id DESC
+    </select>
+    <resultMap id="commentsInPost" type="Post">
+        <id property="id" column="id" />
+        <result property="categoryId" column="categoryId" />
+        <result property="categoryName" column="categoryName" />
+        <result property="userId" column="userId" />
+        <result property="no" column="no" />
+        <result property="title" column="title" />
+        <result property="body" column="body" />
+        <result property="hit" column="hit" />
+
+        <collection property="comments" ofType="Comment">
+            <id property="id" column="commentId" />
+            <result property="categoryId" column="categoryId" />
+            <result property="postNo" column="postNo" />
+            <result property="userId" column="commentUserId" />
+            <result property="commentBody" column="commentBody" />
+            <result property="likesCount" column="likesCount" />
+        </collection>
+    </resultMap>
+
+    <!-- 카테고리 내 선택한 게시글 내용 조회 (댓글 포함 & likesCount DESC) -->
+    <select id="findAllByCategoryIdAndPostNoWithCommentsOrderByLikesCountDesc" resultMap="commentsInPostLikesCount">
+        SELECT p.*,
+            m.id commentId, m.postNo, m.userId commentUserId, m.commentBody, m.likesCount,
+            c.categoryName
+        FROM Post p LEFT JOIN Category c ON p.categoryId = c.id
+            LEFT JOIN Comment m ON p.no = m.postNo
+        WHERE p.categoryId = #{categoryId} AND p.no = #{postNo} AND m.categoryId = #{categoryId} AND m.postNo = #{postNo}
+        ORDER BY m.likesCount DESC
+    </select>
+    <resultMap id="commentsInPostLikesCount" type="Post">
+        <id property="id" column="id" />
+        <result property="categoryId" column="categoryId" />
+        <result property="categoryName" column="categoryName" />
+        <result property="userId" column="userId" />
+        <result property="no" column="no" />
+        <result property="title" column="title" />
+        <result property="body" column="body" />
+        <result property="hit" column="hit" />
+
+        <collection property="comments" ofType="Comment">
+            <id property="id" column="commentId" />
+            <result property="categoryId" column="categoryId" />
+            <result property="postNo" column="postNo" />
+            <result property="userId" column="commentUserId" />
+            <result property="commentBody" column="commentBody" />
+            <result property="likesCount" column="likesCount" />
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultType="Post">
+        SELECT p.*, c.categoryName, u.userId
+        FROM Post p LEFT JOIN Category c ON p.categoryId = c.id
+                    LEFT JOIN User u ON p.userId = u.id
+    </select>
+
+    <select id="findByCategoryIdOrderByNoDesc" resultType="Post">
+        SELECT c.categoryName, p.*
+        FROM Category c LEFT JOIN Post p ON c.id = p.categoryId
+        WHERE c.id = #{categoryId}
+        ORDER BY p.no DESC
+    </select>
+
+    <select id="findByCategoryIdAndNo" resultType="Post">
+        SELECT p.*, c.categoryName
+        FROM Post p LEFT JOIN Category c ON p.categoryId = c.id
+        WHERE p.categoryId = #{categoryId} AND p.no = #{no}
+    </select>
+
+    <select id="findTopByCategoryIdOrderByNoDesc" resultType="Post">
+        SELECT *
+        FROM Post
+        WHERE categoryId = #{categoryId}
+        ORDER BY no DESC
+        LIMIT 0, 1
+    </select>
+
+    <update id="updateHit">
+        UPDATE Post SET
+          hit = #{hit} + 1
+        WHERE no = #{no} AND categoryId = #{categoryId}
+    </update>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT Post (categoryId, userId, no, title, body)
+        VALUES (#{categoryId}, #{userId}, #{no}, #{title}, #{body})
+    </insert>
+
+    <delete id="deleteByCategoryIdAndNo">
+        DELETE FROM Post
+        WHERE categoryId = #{categoryId} AND no = #{no}
+    </delete>
+
+</mapper>

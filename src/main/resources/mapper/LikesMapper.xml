@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.hackday.mapper.LikesMapper">
+
+    <select id="findByCategoryIdAndPostNoAndCommentIdAndUserId" resultType="Likes">
+        SELECT * FROM Likes
+        WHERE categoryId = #{categoryId} AND postNo = #{postNo} AND commentId = #{commentId} AND userId = #{userId}
+    </select>
+
+    <select id="findByCategoryIdAndPostNoAndCommentId" resultType="Likes">
+        SELECT * FROM Likes
+        WHERE categoryId = #{categoryId} AND postNo = #{postNo} AND commentId = #{commentId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+      INSERT Likes (categoryId, postNo, commentId, userId)
+      VALUES (#{categoryId}, #{postNo}, #{commentId}, #{userId})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM Likes
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
