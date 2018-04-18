@@ -101,6 +101,7 @@
 * EHCache : 게시판 전체 목록 조회 성능 개선 테스트
 * MySQL : 주 데이터베이스
 * Tomcat : 웹 애플리케이션 서버
+* Postman & Postman Interceptor : 테스트
 
 ## 기타 메모
 ### GET 방식과 POST 방식에 대한 상식 ?
