@@ -1,9 +1,7 @@
-target/
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 
-#### STS ####
-resources/application.properties
-resources/mapper
+### STS ###
 .apt_generated
 .classpath
 .factorypath
@@ -11,6 +9,10 @@ resources/mapper
 .settings
 .springBeans
 .sts4-cache
+.mvn/
+application.properties
+mvnw
+*.cmd
 
 ### IntelliJ IDEA ###
 .idea
@@ -19,9 +21,9 @@ resources/mapper
 *.ipr
 
 ### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
