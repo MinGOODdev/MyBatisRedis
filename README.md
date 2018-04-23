@@ -111,10 +111,6 @@
 * **GET 방식이 POST 방식보다 빠르다 ?**
     * 빠르다. 그 이유는 GET 방식의 요청은 Caching(한번 접근 후, 또 요청할 시 빠르게 접근하기 위해 데이터를 저장)때문에 
     빠른 것이다.
-    
-### Postman & Postman Interceptor
-* TEST를 위해 Postman Interceptor를 Chrome 확장 프로그램으로 설치하고 Chrome에서 테스트할 경우 Controller가 2번씩
-실행되는 현상 발생. Postman과 Edge로 테스트하면 정상.
 
 ## 저자
 * **조민국** - [MinGOODdev](https://github.com/MinGOODdev)
