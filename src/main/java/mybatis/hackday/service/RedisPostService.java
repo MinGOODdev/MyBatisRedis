@@ -34,13 +34,11 @@ public class RedisPostService implements RedisPostRepository {
     }
 
     @Override
-    public void savePost(List<Post> post) {
-        /*
-            DB에 없는 게시글을 Redis에서도 지워야 함...
-         */
-
-        for(Post p : post)
-            if(p.getHit() >= 10)
+    public void savePost(List<Post> posts) {
+        for(Post p : posts)
+            if(p.getHit() < 10)
+                hashOperations.delete(KEY, p.getTitle(), p);
+            else if(p.getHit() >= 10)
                 hashOperations.put(KEY, p.getTitle(), p);
     }
 
