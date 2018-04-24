@@ -3,6 +3,7 @@ package mybatis.hackday.service;
 import mybatis.hackday.dto.Post;
 import mybatis.hackday.repository.RedisPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,32 +15,35 @@ import java.util.Map;
 @Service
 public class RedisPostService implements RedisPostRepository {
 
-    private static final String KEY = "Post";
-    private RedisTemplate<String, Post> redisTemplate;
-    private HashOperations<String, String, Post> hashOperations;
+  private static final String KEY = "Post";
+  private RedisTemplate<String, Post> redisTemplate;
+  private HashOperations<String, String, Post> hashOperations;
 
-    @Autowired
-    public RedisPostService(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+  @Autowired
+  public RedisPostService(RedisTemplate redisTemplate) {
+    this.redisTemplate = redisTemplate;
+  }
 
-    @PostConstruct
-    private void init() {
-        hashOperations = redisTemplate.opsForHash();
-    }
+  @PostConstruct
+  private void init() {
+    hashOperations = redisTemplate.opsForHash();
+  }
 
-    @Override
-    public Map<String, Post> findAllPost() {
-        return hashOperations.entries(KEY);
-    }
+  @Override
+  public Map<String, Post> findAllPost() {
+    return hashOperations.entries(KEY);
+  }
 
-    @Override
-    public void savePost(List<Post> posts) {
-        for(Post p : posts)
-            if(p.getHit() < 10)
-                hashOperations.delete(KEY, p.getTitle(), p);
-            else if(p.getHit() >= 10)
-                hashOperations.put(KEY, p.getTitle(), p);
+  @Override
+  public void savePost(List<Post> posts) {
+    redisTemplate.execute(RedisConnection::serverCommands).flushAll();
+
+    for (Post p : posts) {
+      StringBuilder builder = new StringBuilder();
+      builder.append(p.getId());
+      if (p.getHit() >= 10)
+        hashOperations.put(KEY, builder.toString(), p);
     }
+  }
 
 }
