@@ -34,6 +34,11 @@ public class RedisPostService implements RedisPostRepository {
     return hashOperations.entries(KEY);
   }
 
+  /**
+   * Redisp에 조회수가 10 이상인 게시글을 저장합니다.
+   * (인기 게시글을 빠르게 조회하기 위한 설정입니다.)
+   * @param posts
+   */
   @Override
   public void savePost(List<Post> posts) {
     redisTemplate.execute(RedisConnection::serverCommands).flushAll();

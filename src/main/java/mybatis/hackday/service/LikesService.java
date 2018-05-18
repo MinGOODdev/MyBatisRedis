@@ -26,6 +26,13 @@ public class LikesService {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * 사용자의 좋아요 요청을 받아
+     * 좋아요가 있으면 삽입 없으면 삭제하여 좋아요 취소를 합니다.
+     * @param categoryId
+     * @param postNo
+     * @param commentId
+     */
     public void likeOrNoLike(int categoryId, int postNo, int commentId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userId = principal.getName();
@@ -33,7 +40,7 @@ public class LikesService {
 
         Comment comment = commentService.findByCategoryIdAndPostNoAndId(categoryId, postNo, commentId);
 
-        // dislikes
+        // 좋아요 & 좋아요 취소 판단
         if(findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId()) != null) {
             Likes likes = findByCategoryIdAndPostNoAndCommentIdAndUserId(categoryId, postNo, commentId, user.getId());
             commentService.subLikesCount(comment);
