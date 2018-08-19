@@ -1,99 +1,26 @@
 # Spring Boot + MyBatis + Security
-* ## Redis
-* ## EHCache
+
+---
+
+### Api Manual
+* [PostCommentController](./apidoc/PostCommentController.md)
+* [PostController](./apidoc/PostController.md)
+* [CommentContoller](./apidoc/CommentController.md)
+* [LikesController](./apidoc/LikesController.md)
+
+---
+
+### Database 구조
 ![Database](./img/myBatisRedis.PNG)
-* Api Manual
-    * [PostCommentController](./apidoc/PostCommentController.md)
-    * [PostController](./apidoc/PostController.md)
-    * [CommentContoller](./apidoc/CommentController.md)
-    * [LikesController](./apidoc/LikesController.md)
 
-## 시작하기
-* IDE: IntelliJ
-* OS: Windows10
-* Java: Version 8
-* pom.xml
+---
 
-```
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>redis.clients</groupId>
-        <artifactId>jedis</artifactId>
-    </dependency>
-    
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-web</artifactId>
-        <version>5.0.4.RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-config</artifactId>
-        <version>5.0.4.RELEASE</version>
-    </dependency>
+### 성능테스트
+![ngrinder](./img/ngrinder.png)
 
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.mybatis.spring.boot</groupId>
-        <artifactId>mybatis-spring-boot-starter</artifactId>
-        <version>1.3.2</version>
-    </dependency>
+---
 
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <scope>runtime</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <optional>true</optional>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <scope>test</scope>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-tomcat</artifactId>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-jasper</artifactId>
-        <version>8.5.20</version>
-    </dependency>
-
-    <!-- spring-boot-starter-cache는 캐시 관련 설정을 편리하게 지원해주는 패키지 -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-cache</artifactId>
-        <version>1.4.0.RELEASE</version>
-    </dependency>
-    <!--
-    spring-boot-starter-cache는 기본 CacheManager로 ConcurrentHashMap을 사용하고 있어서
-    Ehcache 2.x로 교체하기 위해 직접 의존성을 추가
-     -->
-    <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache</artifactId>
-        <version>2.10.3</version>
-    </dependency>
-
-</dependencies>
-```
-
-## 사용된 도구
+### 사용된 도구
 * Spring Boot + MyBatis : CRUD 게시판 구현
 * Security : 사용자 권한 (로그인 구현)
 * Maven - 의존성 관리 프로그램
@@ -112,10 +39,10 @@
     * 빠르다. 그 이유는 GET 방식의 요청은 Caching(한번 접근 후, 또 요청할 시 빠르게 접근하기 위해 데이터를 저장)때문에 
     빠른 것이다.
 
-## 저자
+### 저자
 * **조민국** - [MinGOODdev](https://github.com/MinGOODdev)
 
-## 감사 인사
+### 감사 인사
 
 * [Redis 저장소에 CRUD 로직 구현하기](http://jsonobject.tistory.com/390?category=787905)
 * [Spring Boot에서 Redis 사용하기](http://kingbbode.tistory.com/25)
